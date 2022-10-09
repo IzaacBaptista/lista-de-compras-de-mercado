@@ -1,1 +1,3 @@
-# lista-de-compras-de-mercado
+## Lista de compras de mercado
+
+- Projeto feito em javascript
