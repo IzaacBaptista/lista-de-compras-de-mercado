@@ -44,10 +44,10 @@ const removeItem = function (item) {
 }
 
 //update function
-const updateItem = function (currentItemIndex, value) {
+const updateItem = function (currentItemIndex, value, price) {
     const newItem = todoItems[currentItemIndex];
     newItem.name = value;
-    newItem.price = value;
+    newItem.price = price;
     todoItems.splice(currentItemIndex, 1, newItem);
     setLocalStorage(todoItems);
 }
@@ -111,6 +111,9 @@ const handleItem = function (itemData) {
 
 //get list of Items
 const getList = function (todoItems) {
+    const total = calculateTotal(todoItems);
+    const totalElement = document.querySelector("#total");
+    totalElement.textContent = `Total: R$ ${total}`;
     itemsList.innerHTML = "";
     if (todoItems.length > 0) {
         todoItems.forEach((item) => {
@@ -140,6 +143,18 @@ const getList = function (todoItems) {
         itemsList.insertAdjacentHTML("beforeend", liTag);
     }
 }
+
+// Get total price
+const calculateTotal = function(todoItems) {
+    let total = 0;
+    
+    todoItems.forEach((item) => {
+      total += parseFloat(item.price);
+    });
+    
+    return total.toFixed(2);
+};
+  
 
 //get items from LocalStorage
 const getLocalStorage = function () {
@@ -189,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 alertMessage("Item adicionado a lista", "alert-success");
             }
             getList(todoItems);
+            priceInput.value = "";
         }
         itemInput.value = "";
 
