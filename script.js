@@ -5,6 +5,7 @@ const itemInput = document.querySelector("#itemInput");
 const itemsList = document.querySelector("#itemsList");
 const filters = document.querySelectorAll(".nav-item");
 const alertDiv = document.querySelector("#message");
+const priceInput = document.querySelector("#priceInput");
 
 
 // create an empty item list
@@ -46,6 +47,7 @@ const removeItem = function (item) {
 const updateItem = function (currentItemIndex, value) {
     const newItem = todoItems[currentItemIndex];
     newItem.name = value;
+    newItem.price = value;
     todoItems.splice(currentItemIndex, 1, newItem);
     setLocalStorage(todoItems);
 }
@@ -87,6 +89,7 @@ const handleItem = function (itemData) {
                 e.preventDefault();
                 form.querySelector("button").textContent = "Atualizar";
                 itemInput.value = itemData.name;
+                priceInput.value = itemData.price;
                 document.querySelector("#objIndex").value = todoItems.indexOf(itemData);
             });
 
@@ -119,6 +122,7 @@ const getList = function (todoItems) {
             let liTag = `
             <li class="list-group-item d-flex justify-content-between align-items-center">
                    <span class="title" data-time=${item.addedAt}>${item.name}</span>
+                   <span class="price">R$ ${item.price}</span>
                    <span>
                        <a href="#" data-done><i class="bi ${iconClass}  green"></i></a>
                        <a href="#" data-edit><i class="bi bi-pencil-square blue"></i></a>
@@ -147,7 +151,6 @@ const getLocalStorage = function () {
         todoItems = JSON.parse(todoStorage);
     }
 
-    console.log("items", todoItems);
     getList(todoItems);
 }
 
@@ -161,6 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         const itemName = itemInput.value.trim();
+        const itemPrice = priceInput.value.trim();
         if (itemName.length === 0) {
             alertMessage("Por favor insira um item", "alert-danger");
         }
@@ -169,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const currentItemIndex = document.querySelector("#objIndex").value;
             if (currentItemIndex) {
                 //update
-                updateItem(currentItemIndex, itemName);
+                updateItem(currentItemIndex, itemName, itemPrice);
                 document.querySelector("#objIndex").value = "";
                 alertMessage("Item editado com sucesso", "alert-success");
             }
@@ -177,7 +181,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 const itemObj = {
                     name: itemName,
                     isDone: false,
-                    addedAt: new Date().getTime()
+                    addedAt: new Date().getTime(),
+                    price: itemPrice
                 };
                 todoItems.push(itemObj);
                 setLocalStorage(todoItems);
@@ -186,6 +191,8 @@ document.addEventListener("DOMContentLoaded", () => {
             getList(todoItems);
         }
         itemInput.value = "";
+
+        console.log(todoItems)
 
     });
 

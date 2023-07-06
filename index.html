@@ -46,15 +46,15 @@
                 <form id="itemForm">
                     <h3 class="">Lista de compras</h3>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="itemInput" value=""
-                            placeholder="Por favor insira um item....">
+                        <input type="text" class="form-control" id="itemInput" value="" placeholder="Insira o item...">
+                        <input type="number" class="form-control" id="priceInput" value="" placeholder="Insira o preço...">
                         <button class="btn btn-outline-primary">Adicionar</button>
                     </div>
                 </form>
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item" data-type="all">
-                        <a class="nav-link active" href="#">Lista inteira</a>
+                        <a class="nav-link active" href="#">Lista</a>
                     </li>
                     <li class="nav-item" data-type="todo">
                         <a class="nav-link" href="#">Ainda falta</a>
@@ -67,6 +67,12 @@
                 <ul class="list-group list-group-flush" id="itemsList">
                     <!-- Use javascript to diplay list items here-->
                 </ul>
+                <!-- TOTAL -->
+                <div class="d-flex justify-content-between">
+                    <h4>Total:</h4>
+                    <h4 id="total"></h4>
+                    <input id="totalValue" value="">
+                </div>
 
                 <input type="hidden" id="objIndex" value="">
                 <input type="hidden" id="tabValue" value="all">
