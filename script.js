@@ -41,6 +41,7 @@ const getItemsFilter = function (type) {
 const removeItem = function (item) {
     const removeIndex = todoItems.indexOf(item);
     todoItems.splice(removeIndex, 1);
+    calculateTotal();
 }
 
 //update function
@@ -142,18 +143,20 @@ const getList = function (todoItems) {
         </li>`;
         itemsList.insertAdjacentHTML("beforeend", liTag);
     }
+    calculateTotal();
 }
 
 // Get total price
-const calculateTotal = function(todoItems) {
+const calculateTotal = function() {
     let total = 0;
     
     todoItems.forEach((item) => {
-      total += parseFloat(item.price);
+        total += parseFloat(item.price);
     });
     
-    return total.toFixed(2);
-};
+    const totalElement = document.querySelector("#total");
+    totalElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+}
   
 
 //get items from LocalStorage

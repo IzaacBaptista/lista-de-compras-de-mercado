@@ -47,7 +47,7 @@
                     <h3 class="">Lista de compras</h3>
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="itemInput" value="" placeholder="Insira o item...">
-                        <input type="number" class="form-control" id="priceInput" value="" placeholder="Insira o preço...">
+                        <input type="number" class="form-control" id="priceInput" value="" step="0.01" placeholder="Insira o preço...">
                         <button class="btn btn-outline-primary">Adicionar</button>
                     </div>
                 </form>
@@ -69,8 +69,7 @@
                 </ul>
                 <!-- TOTAL -->
                 <div class="d-flex justify-content-between">
-                    <h4>Total:</h4>
-                    <h4 id="total"></h4>
+                    <h4 id="total" type="hidden"></h4>
                 </div>
 
                 <input type="hidden" id="objIndex" value="">
@@ -81,6 +80,9 @@
     </div>
 
     <script src="script.js"></script>
+    <!-- <script type="module" src="index.js"></script>
+    <script type="module" src="itemActions.js"></script>
+    <script type="module" src="localStorage.js"></script> -->
 </body>
 
 </html>
