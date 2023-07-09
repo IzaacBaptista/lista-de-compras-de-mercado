@@ -46,9 +46,14 @@
                 <form id="itemForm">
                     <h3 class="">Lista de compras</h3>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="itemInput" value="" placeholder="Insira o item...">
-                        <input type="number" class="form-control" id="priceInput" value="" step="0.01" placeholder="Insira o preço...">
-                        <button class="btn btn-outline-primary">Adicionar</button>
+                        <!-- item -->
+                        <input type="text" class="form-control" id="itemInput" value="" placeholder="Item">
+                        <!-- quantidade -->
+                        <input type="number" class="form-control" id="quantityInput" value="" placeholder="Qtd">
+                        <!-- preço -->
+                        <input type="number" class="form-control" id="priceInput" value="" step="0.01" placeholder="Preço">
+                        <!-- button -->
+                        <button class="btn btn-outline-primary" id="buttonAtualizar">Adicionar</button>
                     </div>
                 </form>
 
@@ -63,13 +68,23 @@
                         <a class="nav-link" href="#">Já foi</a>
                     </li>
                 </ul>
-
+                <table class="table">
+                    <thead>
+                        <tr class="table-light fs-5">
+                            <th scope="col">Item</th>
+                            <th scope="col">Preço Unitário</th>
+                            <th scope="col">Qtd</th>
+                            <th scope="col">Preço Total</th>
+                            <th scope="col">...</th>
+                        </tr>
+                    </thead>
+                </table>
                 <ul class="list-group list-group-flush" id="itemsList">
-                    <!-- Use javascript to diplay list items here-->
+                    <!-- -->
                 </ul>
                 <!-- TOTAL -->
-                <div class="d-flex justify-content-between">
-                    <h4 id="total" type="hidden"></h4>
+                <div class="align-items-end" style="background-color: rgb(43, 150, 226);">
+                    <h1 id="total" type="hidden"></h1>
                 </div>
 
                 <input type="hidden" id="objIndex" value="">
