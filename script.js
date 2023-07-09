@@ -6,6 +6,7 @@ const itemsList = document.querySelector("#itemsList");
 const filters = document.querySelectorAll(".nav-item");
 const alertDiv = document.querySelector("#message");
 const priceInput = document.querySelector("#priceInput");
+const quantityInput = document.querySelector("#quantityInput");
 
 
 // create an empty item list
@@ -45,10 +46,11 @@ const removeItem = function (item) {
 }
 
 //update function
-const updateItem = function (currentItemIndex, value, price) {
+const updateItem = function (currentItemIndex, value, price, qtd) {
     const newItem = todoItems[currentItemIndex];
     newItem.name = value;
     newItem.price = price;
+    newItem.qtd = qtd;
     todoItems.splice(currentItemIndex, 1, newItem);
     setLocalStorage(todoItems);
 }
@@ -91,6 +93,7 @@ const handleItem = function (itemData) {
                 form.querySelector("button").textContent = "Atualizar";
                 itemInput.value = itemData.name;
                 priceInput.value = itemData.price;
+                quantityInput.value = itemData.qtd;
                 document.querySelector("#objIndex").value = todoItems.indexOf(itemData);
             });
 
@@ -125,13 +128,15 @@ const getList = function (todoItems) {
 
             let liTag = `
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                   <span class="title" data-time=${item.addedAt}>${item.name}</span>
-                   <span class="price">R$ ${item.price}</span>
-                   <span>
-                       <a href="#" data-done><i class="bi ${iconClass}  green"></i></a>
-                       <a href="#" data-edit><i class="bi bi-pencil-square blue"></i></a>
-                       <a href="#" data-delete><i class="bi bi-x-circle red"></i></a>
-                   </span>
+                <span class="fs-5 title" data-time=${item.addedAt}>${item.name}</span>
+                <span class="fs-5 price">${item.price}</span>
+                <span class="fs-5 qtd" > x ${item.qtd} uni. </span>
+                <span class="fs-5 price">R$ ${item.price * item.qtd}</span>
+                <span>
+                    <a href="#" data-done><i class="bi ${iconClass}  green"></i></a>
+                    <a href="#" data-edit><i class="bi bi-pencil-square blue"></i></a>
+                    <a href="#" data-delete><i class="bi bi-x-circle red"></i></a>
+                </span>
             </li>`;
             itemsList.insertAdjacentHTML("beforeend", liTag);
             handleItem(item);
@@ -139,7 +144,7 @@ const getList = function (todoItems) {
     } else {
         let liTag = `
         <li class="list-group-item d-flex justify-content-between align-items-center">
-               <span>No Records Found.</span>
+               <span></span>
         </li>`;
         itemsList.insertAdjacentHTML("beforeend", liTag);
     }
@@ -151,7 +156,8 @@ const calculateTotal = function() {
     let total = 0;
     
     todoItems.forEach((item) => {
-        total += parseFloat(item.price);
+        qtd = parseFloat(item.qtd);
+        total += parseFloat(item.price) * qtd;
     });
     
     const totalElement = document.querySelector("#total");
@@ -183,6 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const itemName = itemInput.value.trim();
         const itemPrice = priceInput.value.trim();
+        const itemQuantity = quantityInput.value.trim();
         if (itemName.length === 0) {
             alertMessage("Por favor insira um item", "alert-danger");
         }
@@ -191,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const currentItemIndex = document.querySelector("#objIndex").value;
             if (currentItemIndex) {
                 //update
-                updateItem(currentItemIndex, itemName, itemPrice);
+                updateItem(currentItemIndex, itemName, itemPrice, itemQuantity);
                 document.querySelector("#objIndex").value = "";
                 alertMessage("Item editado com sucesso", "alert-success");
             }
@@ -200,7 +207,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     name: itemName,
                     isDone: false,
                     addedAt: new Date().getTime(),
-                    price: itemPrice
+                    price: itemPrice,
+                    qtd: itemQuantity
                 };
                 todoItems.push(itemObj);
                 setLocalStorage(todoItems);
@@ -208,6 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             getList(todoItems);
             priceInput.value = "";
+            quantityInput.value = "";
         }
         itemInput.value = "";
 
